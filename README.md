@@ -23,6 +23,27 @@
 1. 进入 `web` 目录，执行 `yarn` 或 `npm install` 安装前端依赖
 2. 返回项目根目录，执行 `sh build.sh` 进行编译
 
+## HTTPS 配置
+
+生成自签证书并配置：
+
+```bash
+# 生成自签证书
+openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 3650 \
+  -keyout /home/surenkid/localhost.key \
+  -out /home/surenkid/localhost.crt \
+  -subj "/CN=localhost"
+```
+
+在 `config.yml` 中配置：
+
+```yaml
+server:
+  addr: 0.0.0.0:8443
+  cert: /home/surenkid/localhost.crt
+  key: /home/surenkid/localhost.key
+```
+
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request。
