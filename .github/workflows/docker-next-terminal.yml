@@ -2,9 +2,6 @@ name: Docker next-terminal Build
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - "v*"
 
 jobs:
   DOCKERHUB_next-terminal_Build:
