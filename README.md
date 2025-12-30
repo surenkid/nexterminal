@@ -1,1 +1,28 @@
 # nexterminal
+
+基于 [Next Terminal](https://github.com/dushixiang/next-terminal) 的二次开发项目。
+
+## 项目说明
+
+这是一个基于 AGPL-3.0 许可证的开源网页终端项目，支持 RDP、SSH、VNC、Telnet、Kubernetes 等协议。
+
+## 许可证
+
+本项目基于 AGPL-3.0 许可证开源。详情请参阅 [LICENSE](./LICENSE) 文件。
+
+## 开发说明
+
+### 环境要求
+
+- Go 1.18 或以上版本
+- Node.js 16 或以上版本
+- npm 或 yarn
+
+### 编译
+
+1. 进入 `web` 目录，执行 `yarn` 或 `npm install` 安装前端依赖
+2. 返回项目根目录，执行 `sh build.sh` 进行编译
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request。
