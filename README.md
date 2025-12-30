@@ -44,6 +44,20 @@ server:
   key: /home/surenkid/localhost.key
 ```
 
+## HTTP Basic Auth 配置
+
+启用 HTTP Basic Authentication 可以保护所有资源，防止未授权访问：
+
+```yaml
+server:
+  basic-auth:
+    enable: true
+    user: your_username
+    pass: your_password
+```
+
+启用后，所有请求都需要先通过 Basic Auth 验证，未提供正确凭证将返回 401。
+
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request。

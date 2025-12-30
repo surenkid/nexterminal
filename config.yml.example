@@ -10,6 +10,11 @@ sqlite:
   file: './data/sqlite/next-terminal.db'
 server:
   addr: 0.0.0.0:8088
+  # HTTP Basic Auth 配置（可选，用于保护所有资源包括静态文件）
+  basic-auth:
+    enable: false
+    user: ""
+    pass: ""
 guacd:
   hostname: 127.0.0.1
   port: 4822

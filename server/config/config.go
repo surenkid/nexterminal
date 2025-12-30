@@ -51,9 +51,12 @@ type Sqlite struct {
 }
 
 type Server struct {
-	Addr string
-	Cert string
-	Key  string
+	Addr            string
+	Cert            string
+	Key             string
+	BasicAuthEnable bool
+	BasicAuthUser   string
+	BasicAuthPass   string
 }
 
 type Guacd struct {
@@ -90,6 +93,9 @@ func SetupConfig() (*Config, error) {
 	pflag.String("server.addr", "", "server listen addr")
 	pflag.String("server.cert", "", "tls cert file")
 	pflag.String("server.key", "", "tls key file")
+	pflag.Bool("server.basic-auth.enable", false, "enable http basic auth")
+	pflag.String("server.basic-auth.user", "", "http basic auth username")
+	pflag.String("server.basic-auth.pass", "", "http basic auth password")
 	pflag.String("reset-totp", "", "")
 	pflag.String("reset-password", "", "")
 	pflag.String("encryption-key", "", "")
@@ -138,9 +144,12 @@ func SetupConfig() (*Config, error) {
 			File: viper.GetString("sqlite.file"),
 		},
 		Server: &Server{
-			Addr: viper.GetString("server.addr"),
-			Cert: viper.GetString("server.cert"),
-			Key:  viper.GetString("server.key"),
+			Addr:            viper.GetString("server.addr"),
+			Cert:            viper.GetString("server.cert"),
+			Key:             viper.GetString("server.key"),
+			BasicAuthEnable: viper.GetBool("server.basic-auth.enable"),
+			BasicAuthUser:   viper.GetString("server.basic-auth.user"),
+			BasicAuthPass:   viper.GetString("server.basic-auth.pass"),
 		},
 		ResetPassword:    viper.GetString("reset-password"),
 		ResetTotp:        viper.GetString("reset-totp"),

@@ -46,6 +46,9 @@ func setupRoutes() *echo.Echo {
 	//e.Logger = log.GetEchoLogger()
 	//e.Use(log.Hook())
 
+	// HTTP Basic Auth 中间件 - 在所有路由之前应用，包括静态资源
+	e.Use(mw.BasicAuth)
+
 	fsys := getFS(config.GlobalCfg.Debug)
 	fileServer := http.FileServer(http.FS(fsys))
 	handler := WrapHandler(fileServer)
