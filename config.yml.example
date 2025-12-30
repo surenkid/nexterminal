@@ -24,6 +24,6 @@ guacd:
   drive: '/usr/local/next-terminal/data/drive'
 
 sshd:
-  enable: true
+  enable: false
   addr: 0.0.0.0:2022
   key: ~/.ssh/id_rsa
