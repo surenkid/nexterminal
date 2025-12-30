@@ -84,6 +84,29 @@ systemctl enable next-terminal
 systemctl start next-terminal
 ```
 
+## OpenRC 服务配置
+
+```bash
+cat <<EOF > /etc/init.d/next-terminal
+#!/sbin/openrc-run
+
+name="next-terminal"
+command="/usr/local/next-terminal/next-terminal"
+command_user="root"
+pidfile="/var/run/next-terminal.pid"
+directory="/usr/local/next-terminal"
+command_background="yes"
+
+depend() {
+    need net
+}
+EOF
+
+chmod +x /etc/init.d/next-terminal
+rc-update add next-terminal default
+rc-service next-terminal start
+```
+
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request。
