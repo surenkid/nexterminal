@@ -58,6 +58,32 @@ server:
 
 启用后，所有请求都需要先通过 Basic Auth 验证，未提供正确凭证将返回 401。
 
+## Systemd 服务配置
+
+```bash
+cat <<EOF > /etc/systemd/system/next-terminal.service
+[Unit]
+Description=next-terminal service
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/usr/local/next-terminal
+ExecStart=/usr/local/next-terminal/next-terminal
+TimeoutSec=0
+RestartSec=10
+Restart=always
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable next-terminal
+systemctl start next-terminal
+```
+
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request。
