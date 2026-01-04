@@ -5,6 +5,8 @@
 ## 项目说明
 
 这是一个基于 AGPL-3.0 许可证的开源网页终端项目，支持 RDP、SSH、VNC、Telnet、Kubernetes 等协议。
+主要改动为：
+- 添加了全局http auth认证
 
 ## 许可证
 
