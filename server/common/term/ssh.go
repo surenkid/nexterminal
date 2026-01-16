@@ -25,6 +25,7 @@ func NewSshClient(ip string, port int, username, password, privateKey, passphras
 	}
 
 	var err error
+	var authMethods []ssh.AuthMethod
 	if privateKey != "" {
 		var key ssh.Signer
 		if len(passphrase) > 0 {
@@ -39,14 +40,26 @@ func NewSshClient(ip string, port int, username, password, privateKey, passphras
 			}
 		}
 		authMethod = ssh.PublicKeys(key)
+		authMethods = []ssh.AuthMethod{authMethod}
 	} else {
-		authMethod = ssh.Password(password)
+		// 同时支持Password和KeyboardInteractive认证方式
+		// 某些服务器(如使用PAM、RADIUS等)只支持keyboard-interactive
+		authMethods = []ssh.AuthMethod{
+			ssh.Password(password),
+			ssh.KeyboardInteractive(func(user, instruction string, questions []string, echos []bool) ([]string, error) {
+				answers := make([]string, len(questions))
+				for i := range questions {
+					answers[i] = password
+				}
+				return answers, nil
+			}),
+		}
 	}
 
 	config := &ssh.ClientConfig{
 		Timeout:         3 * time.Second,
 		User:            username,
-		Auth:            []ssh.AuthMethod{authMethod},
+		Auth:            authMethods,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
@@ -70,6 +83,7 @@ func NewSshClientUseSocks(ip string, port int, username, password, privateKey, p
 	}
 
 	var err error
+	var authMethods []ssh.AuthMethod
 	if privateKey != "" {
 		var key ssh.Signer
 		if len(passphrase) > 0 {
@@ -84,14 +98,26 @@ func NewSshClientUseSocks(ip string, port int, username, password, privateKey, p
 			}
 		}
 		authMethod = ssh.PublicKeys(key)
+		authMethods = []ssh.AuthMethod{authMethod}
 	} else {
-		authMethod = ssh.Password(password)
+		// 同时支持Password和KeyboardInteractive认证方式
+		// 某些服务器(如使用PAM、RADIUS等)只支持keyboard-interactive
+		authMethods = []ssh.AuthMethod{
+			ssh.Password(password),
+			ssh.KeyboardInteractive(func(user, instruction string, questions []string, echos []bool) ([]string, error) {
+				answers := make([]string, len(questions))
+				for i := range questions {
+					answers[i] = password
+				}
+				return answers, nil
+			}),
+		}
 	}
 
 	config := &ssh.ClientConfig{
 		Timeout:         3 * time.Second,
 		User:            username,
-		Auth:            []ssh.AuthMethod{authMethod},
+		Auth:            authMethods,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
